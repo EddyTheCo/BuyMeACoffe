@@ -1,5 +1,4 @@
 <script type="module" src="https://md-block.verou.me/md-block.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/EddyTheCo/DLockersServer@main/wasm/coi-serviceworker.js"></script>
 <script>
 qtLoader = initQTwasm('https://raw.githubusercontent.com/EddyTheCo/BuyMeACoffe/main/wasm/', 'buymeacoffe', '#qtrootDiv', 'img/qtlogo.svg');
 
