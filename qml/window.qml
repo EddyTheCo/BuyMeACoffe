@@ -5,10 +5,13 @@ import QtQuick.Layouts
 
 ApplicationWindow {
     visible: true
+    color:"transparent"
+    width: 500;
+    height:200;
     Rectangle
     {
-        width: parent.width*0.95
-        height: img.height*1.5
+        width: parent.width
+        height: img.height*1.3
         anchors.centerIn: parent
         color:"#0f171e"
         border.color: "white"
@@ -23,19 +26,19 @@ ApplicationWindow {
             Rectangle
             {
                 id: qr_back
-                Layout.preferredWidth: 200
+                Layout.preferredWidth: 150
                 Layout.minimumWidth: 100
-                Layout.maximumWidth: 300
+                Layout.maximumWidth: 200
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignRight
-                Layout.minimumHeight: width
-                Layout.maximumHeight: width
+                Layout.maximumHeight: 400
+                Layout.minimumHeight: 100
                 Layout.fillHeight: true
                 color:"white"
                 Image {
                     id:img
                     anchors.centerIn:qr_back
-                    sourceSize.width: ((qr_back.width<qr_back.height)?qr_back.width:qr_back.height)-10
+                    sourceSize.width: ((qr_back.width<qr_back.height)?qr_back.width:qr_back.height)-5
                     source: "image://qrcodeblack/"+Monitor.addr
                     ToolTip
                     {
@@ -68,10 +71,10 @@ ApplicationWindow {
             {
                 id:right_
                 color:"transparent"
-                Layout.preferredWidth: 300
+                Layout.preferredWidth: 250
                 Layout.minimumWidth: 200
                 Layout.minimumHeight: 100
-                Layout.maximumHeight: 500
+                Layout.maximumHeight: 400
 
                 Layout.fillHeight: true
                 Layout.fillWidth: true
