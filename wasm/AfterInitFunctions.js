@@ -1,6 +1,6 @@
 <script type="module" src="https://md-block.verou.me/md-block.js"></script>
 <script>
-qtLoader = initQTwasm('https://raw.githubusercontent.com/EddyTheCo/BuyMeACoffe/main/wasm/', 'buymeacoffe', '#qtrootDiv', 'img/qtlogo.svg');
+qtLoader = initQTwasm('https://eddytheco.github.io/BuyMeACoffe/wasm/', 'buymeacoffe', '#qtrootDiv', 'img/qtlogo.svg');
 
 checkModuleLoad=setInterval(function() {
 		if (qtLoader.module())
