@@ -29,6 +29,11 @@ target_link_libraries(buymeacoffe PRIVATE Qt6::Gui Qt6::Quick QtQrGen )
 
 target_include_directories(buymeacoffe PUBLIC include)
 
+if(EMSCRIPTEN)
+target_compile_options(buymeacoffe PRIVATE -pthread)
+target_link_options(buymeacoffe PRIVATE -pthread -sPTHREAD_POOL_SIZE=1)
+endif()
+
 include(FetchContent)
 FetchContent_Declare(
 	qrCode
