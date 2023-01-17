@@ -65,7 +65,7 @@ if(EMSCRIPTEN)
           TARGET buymeacoffe
           POST_BUILD
           COMMAND ${CMAKE_COMMAND}
-          ARGS -E copy ${CMAKE_CURRENT_BINARY_DIR}/buymeacoffe.js ${CMAKE_CURRENT_BINARY_DIR}/buymeacoffe.wasm ${CMAKE_CURRENT_SOURCE_DIR}/wasm
+          ARGS -E copy ${CMAKE_CURRENT_BINARY_DIR}/buymeacoffe.js ${CMAKE_CURRENT_BINARY_DIR}/buymeacoffe.wasm ${CMAKE_CURRENT_BINARY_DIR}/buymeacoffe.worker.js ${CMAKE_CURRENT_SOURCE_DIR}/wasm
           )
 endif()
 target_compile_definitions(buymeacoffe
