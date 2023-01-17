@@ -1,4 +1,4 @@
-# [BuyMeACoffe](https://eddytheco.github.io/initQTwasm/?after_body_url=https://eddytheco.github.io/BuyMeACoffe/wasm/afterbody.html&init_scripts=https://eddytheco.github.io/BuyMeACoffe/wasm/AfterInitFunctions.js&github_repo=https://github.com/EddyTheCo/BuyMeACoffe&readme_url=https://eddytheco.github.io/BuyMeACoffe/README.md)
+# [BuyMeACoffe](https://eddytheco.github.io/BuyMeACoffe/wasm/index.html)
 
 This repo produce a wasm file able to monitor certain IOTA-address(Shimmer).
 The application will show the total amount of funds on the address and also the metadata of the new transfer funds to that address.
@@ -8,7 +8,7 @@ Due to that, one needs to take care of collecting the dust on your address.
 
 ### How to embed it into your webpage
 
-1. Include [initQTwasm](https://github.com/EddyTheCo/initQTwasm/blob/main/js/initQTwasm.js) and [qtloader](https://github.com/EddyTheCo/initQTwasm/blob/main/qtloader.js) in your JavaScripts.
+1. Include [initQTwasm](https://eddytheco.github.io/BuyMeACoffe/wasm/js/initQTwasm.js) in your JavaScripts.
 
 2. Select an element of your webpage where you want the BuyMeACoffe to show and set the 'id'.
 like:
@@ -19,7 +19,7 @@ like:
 
 3. Load  the wasm and emscriptem module with:
 ```
-qtLoader = initQTwasm('https://raw.githubusercontent.com/EddyTheCo/BuyMeACoffe/main/wasm/', 'buymeacoffe', '#qtrootDiv', 'img/qtlogo.svg');
+qtLoader = initQTwasm('.', 'buymeacoffe', '#qtrootDiv', 'img/qtlogo.svg');
 
 ```
 where the first argument is the address where the buymeacoffe.wasm and buymeacoffe.js are.
@@ -76,9 +76,9 @@ cmake --build .
 If everything went well, the corresponding WASM file and JavaScript Api should be updated on the BuyMeACoffe/wasm source directory. 
 
 ## Running the web page locally
-
-You need to set the node address and the payment address first by using JavaScript then 
+ 
 ```
+cd ../BuyMeACoffe/wasm
 emrun  buymeacoffe.html
 ```
 
