@@ -1,4 +1,4 @@
-# [BuyMeACoffe](https://eddytheco.github.io/initQTwasm/?after_body_url=https://raw.githubusercontent.com/EddyTheCo/BuyMeACoffe/main/wasm/afterbody.html&init_scripts=https://raw.githubusercontent.com/EddyTheCo/BuyMeACoffe/main/wasm/AfterInitFunctions.js&github_repo=https://github.com/EddyTheCo/BuyMeACoffe&readme_url=https://github.com/EddyTheCo/BuyMeACoffe/README.md)
+# [BuyMeACoffe](https://eddytheco.github.io/initQTwasm/?after_body_url=https://raw.githubusercontent.com/EddyTheCo/BuyMeACoffe/main/wasm/afterbody.html&init_scripts=https://raw.githubusercontent.com/EddyTheCo/BuyMeACoffe/main/wasm/AfterInitFunctions.js&github_repo=https://github.com/EddyTheCo/BuyMeACoffe&readme_url=https://raw.githubusercontent.com/EddyTheCo/BuyMeACoffe/main/README.md)
 
 This repo produce a wasm file able to monitor certain IOTA-address(Shimmer).
 The application will show the total amount of funds on the address and also the metadata of the new transfer funds to that address.
