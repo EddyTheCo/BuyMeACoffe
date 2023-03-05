@@ -48,21 +48,15 @@ checkModuleLoad=setInterval(function() {
 You can load mine, but you are the only responsible if someone change the address you show on the qrcode.**
 
 
-## How to compile the .wasm 
+## How to compile the .wasm
+
+**This repo is out of date for some dependencies** 
 The only dependencies of this code is [Qt](https://www.qt.io/) for wasm.
 It is necessary to have installed [Qt for WebAssembly](https://doc.qt.io/qt-6/wasm.html). 
 
 Clone the repo
 ```
 git clone git@github.com:EddyTheCo/BuyMeACoffe.git 
-```
-Create a 'local_conf.cmake' file inside BuyMeACoffe folder with content
-```
-set(CMAKE_FIND_ROOT_PATH /pathtoemsdk/emsdk/upstream/emscripten/cache/sysroot/ /pathtoQt/Qt/version/wasm_32)
-
-set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM ONLY)
-set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
-set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 ```
 
 Create build directory and build from there. One needs to use the qt-cmake from wasm_32 folder.
