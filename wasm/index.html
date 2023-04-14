@@ -1,60 +1,43 @@
 <!doctype html>
 <html lang="en-us">
+
 	<head>
 		<meta charset="utf-8">
+		<link href='https://fonts.googleapis.com/css?family=Allerta Stencil' rel='stylesheet'>
+		<link href='https://fonts.googleapis.com/css?family=Ubuntu Condensed' rel='stylesheet'>
+		<script type="text/javascript" src="qtloader.js"></script>
+		<script type="text/javascript" src="js/initQTwasm.js"></script>
+		<script type="text/javascript" src="js/scripts.js"></script>
+		<script type="module" src="https://md-block.verou.me/md-block.js"></script>
+		<link rel="stylesheet" href="https://cdn.korzh.com/metroui/v4.5.1/css/metro-all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+		<script src="https://cdn.korzh.com/metroui/v4.5.1/js/metro.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+		<link rel="stylesheet" href="style.css">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link href='https://fonts.googleapis.com/css?family=Allerta Stencil' rel='stylesheet'>
-		<link href='https://fonts.googleapis.com/css?family=Ubuntu Condensed' rel='stylesheet'>
-		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-		<script type="text/javascript" src="qtloader.js"></script>
-		<script type="text/javascript" src="js/initQTwasm.js"></script>
-		<script type="text/javascript" src="js/cascade.js"></script>
-		<script src="coi-serviceworker.js"></script>
-		<link rel="stylesheet" href="style.css">
-		<script type="module" src="https://md-block.verou.me/md-block.js"></script>
-		<script>
-			function init()
-			{
-			qtLoader = initQTwasm('.', 'buymeacoffe', '#qtrootDiv', 'img/qtlogo.svg');
 
-			checkModuleLoad=setInterval(function() {
-			if (qtLoader.module())
-			{
-				qtLoader.module().Monitor.get_monitor().set_properties("https://api.testnet.shimmer.network","rms1qrzgmpr0lzvqxzu73qakkvg7v2qd2lngkaf64w256c76vepag4sqs27e25s");
-				clearInterval(checkModuleLoad);
-			}
-			if( typeof counter == 'undefined' ) {
-				counter = 0;
-			}
-			counter++;
-			if(counter>60)clearInterval(checkModuleLoad);
-			}, 1000);
-						}
-		</script>
-
-		<title>Buy me a Coffe</title>
+		<title>Buy me a coffe</title>
 	</head>
-	<body onload="init();LoadFile('https://eddytheco.github.io/BuyMeACoffe/README.md')">
-		<div class="pair">
-			<div class="codeArea" style="float:left; width:65%;height:100%;" >
-				<div id="editor" >
-					<md-block id="md" >
-						   </md-block>
+
+	<body onload="init();LoadFile('https://eddytheco.github.io/BuyMeACoffe/README.md');">
+		<div class="pair" data-role="splitter" data-on-resize-split="resizeSplitX" class="h-100" >
+			<div class="codeArea d-flex flex-justify-center flex-align-center">
+				<div id="editor" style="margin:0px;">
+					<md-block id="md">
+						       </md-block>
 				</div>
 			</div>
-
-				<div class="playArea" style="float:left;width:32%;height:100%">
-					<div style="width:100%;" id="qtrootDiv">
-					</div>
-				</div>
+			<div class="playArea d-flex flex-justify-center flex-align-center" id="qtrootDiv">
+			</div>
 		</div>
 		<footer>
-			<div class="fdiv" id="gitrepo" style="text-align:center;" >
+			<div class="fdiv" id="gitrepo" style="text-align:center;">
 				<a style="display: contents; width:30px;" href="https://github.com/EddyTheCo/BuyMeACoffe" target="_blank"><img style="width:30px;" id="gitHublogo" src="img/gitHublogo.png"></img></a>
-				Developed by <a href="https://eddytheco.github.io/" target="_blank" > Eddy</a>
+				Developed by <a href="https://eddytheco.github.io/" target="_blank">Eddy</a>
 			</div>
 		</footer>
 	</body>
+
 </html>

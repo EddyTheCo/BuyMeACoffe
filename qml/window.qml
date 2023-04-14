@@ -1,114 +1,73 @@
 import QtQuick.Controls
-import BuyMeACoffe
 import QtQuick
 import QtQuick.Layouts
+import BuyMeACoffe
 
 ApplicationWindow {
     visible: true
     color:"transparent"
-    width: 500;
-    height:200;
-    Rectangle
+    id:win
+    property string addr:Message_model.monitor.addr
+    property var saldo:Message_model.monitor.saldo
+
+
+
+    GridLayout
     {
-        width: parent.width
-        height: img.height*1.3
-        anchors.centerIn: parent
-        color:"#0f171e"
-        border.color: "white"
-        border.width: 1
-        radius:10
+        id:grid
+        anchors.fill: parent
+        columns: parent.width > 350 ? 2 : 1
+        rows : parent.width > 350 ? 1 : 2
 
-        RowLayout
+        MyAddressQr
         {
-            anchors.fill: parent
-            spacing: 0
+            id: qr_back
+            Layout.minimumWidth: (grid.columns===2)?100:50
+            Layout.maximumWidth: 200
+            Layout.maximumHeight: width
+            Layout.minimumHeight: width
+            Layout.alignment: (grid.columns===2)?(Qt.AlignTop|Qt.AlignLeft):(Qt.AlignTop|Qt.AlignHCenter)
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            addr_:win.addr
+        }
 
-            Rectangle
+        ColumnLayout
+        {
+            id:right_
+            Layout.minimumWidth: 50
+            Layout.minimumHeight: 50
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            Layout.alignment: (grid.columns===2)?(Qt.AlignTop|Qt.AlignLeft):(Qt.AlignTop|Qt.AlignHCenter)
+            spacing:0
+            Text
             {
-                id: qr_back
-                Layout.preferredWidth: 150
-                Layout.minimumWidth: 100
-                Layout.maximumWidth: 200
-                Layout.fillWidth: true
-                Layout.alignment: Qt.AlignRight
-                Layout.maximumHeight: 400
-                Layout.minimumHeight: 100
-                Layout.fillHeight: true
-                color:"white"
-                Image {
-                    id:img
-                    anchors.centerIn:qr_back
-                    sourceSize.width: ((qr_back.width<qr_back.height)?qr_back.width:qr_back.height)-5
-                    source: "image://qrcodeblack/"+Monitor.addr
-                    ToolTip
-                    {
-                        id:tooltip
-                        visible: false
-                        text:qsTr("Copy")
-                    }
-                }
-
-                TextEdit{
-                    id: textEdit
-                    visible: false
-                }
-                MouseArea {
-                    anchors.fill: img
-                    hoverEnabled :true
-                    onEntered: tooltip.visible=!tooltip.visible
-                    onExited: tooltip.visible=!tooltip.visible
-                    onClicked:
-                    {
-                        console.log("clicked",Monitor.addr)
-                        textEdit.text = Monitor.addr
-                        textEdit.selectAll()
-                        textEdit.copy()
-                    }
-                }
-            }
-
-            Rectangle
-            {
-                id:right_
-                color:"transparent"
-                Layout.preferredWidth: 250
-                Layout.minimumWidth: 200
-                Layout.minimumHeight: 100
-                Layout.maximumHeight: 400
-
+                id:tamo_
+                Layout.minimumWidth: 75
+                Layout.minimumHeight: 35
+                Layout.maximumHeight: 50
                 Layout.fillHeight: true
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignTop
-                Text
-                {
-                    id:tamo_
-                    anchors.top: right_.top
-                    anchors.horizontalCenter: right_.horizontalCenter
-                    color:"white"
-                    text:"<b>Total:   </b>"+ Monitor.saldo
-                    font.pointSize: 16
-                    wrapMode:Text.WordWrap
-                    width:right_.width*0.98
-                    horizontalAlignment: TextEdit.AlignHCenter
 
-                }
-                Message_list
-                {
-                    id:list_
-                    nelem:3
-                    width:right_.width*0.95
-                    anchors.top: tamo_.bottom
-                    anchors.horizontalCenter: right_.horizontalCenter
-                    height: (right_.height-tamo_.height)*0.98
-                }
+                text:"<b>Total:   </b>"+ win.saldo.amount + " " + win.saldo.unit
+                fontSizeMode:Text.Fit
+                wrapMode:Text.WordWrap
+
+                horizontalAlignment: TextEdit.AlignHCenter
+
             }
-
+            Message_list
+            {
+                id:list_
+                Layout.alignment: Qt.AlignTop
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+            }
         }
 
     }
-
-
-
 
 }
 
