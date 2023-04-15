@@ -11,6 +11,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick)
 
 
+
 qt_add_executable(buymeacoffe buymeacoffe.cpp)
 
 qt6_add_qml_module(buymeacoffe
@@ -20,7 +21,6 @@ qt6_add_qml_module(buymeacoffe
     src/monitor.cpp
     src/model.cpp
     include/model.hpp
-    include/style.hpp
     include/monitor.hpp
     QML_FILES
     qml/window.qml
@@ -34,6 +34,13 @@ qt6_add_qml_module(buymeacoffe
     ${CMAKE_BINARY_DIR}/_deps/nodeconection-build
     ${CMAKE_BINARY_DIR}/_deps/account-build
 )
+
+qt_add_resources(buymeacoffe "buymeacoffe.fonts"
+    PREFIX "/esterVtech.com/imports/BuyMeACoffe"
+    FILES
+        "qml/fonts/DeliciousHandrawn-Regular.ttf"
+)
+
 target_link_libraries(buymeacoffe PRIVATE Qt::Core Qt::Gui Qt::Qml Qt::Quick)
 
 target_include_directories(buymeacoffe PUBLIC include)
