@@ -7,27 +7,32 @@ Notice that the application do not collect the new outputs created on your addre
 Due to that, one needs to take care of collecting the dust on your address.
 
 ### How to embed it into your webpage
-1. Include [qtloader.js](https://eddytheco.github.io/BuyMeACoffe/wasm/qtloader.js)
-1. Include [initQTwasm](https://eddytheco.github.io/BuyMeACoffe/wasm/js/initQTwasm.js) in your JavaScripts.
 
-2. Select an element of your webpage where you want the BuyMeACoffe to show and set the 'id'.
+* Include [qtloader.js](https://eddytheco.github.io/BuyMeACoffe/wasm/qtloader.js)
+* Include [initQTwasm](https://eddytheco.github.io/BuyMeACoffe/wasm/js/initQTwasm.js) in your JavaScripts.
+
+* Select an element of your webpage where you want the BuyMeACoffe to show and set the 'id'.
 like:
-```
+
+```html
  <div id="qtrootDiv">
  </div>
 ```
 
-3. Load  the wasm and emscriptem module with:
-```
+* Load  the wasm and emscriptem module with:
+
+```js
 qtLoader = initQTwasm('.', 'buymeacoffe', '#qtrootDiv', 'img/qtlogo.svg');
 
 ```
+
 where the first argument is the address where the buymeacoffe.wasm and buymeacoffe.js are.
 The second argument is the name of the application, #qtrootDiv represent the element id where you want to show it.
 And the last argument is the logo to show when the application is loading. 
 
-4. Check that the module was created and once created set the node address and Startdust address(from javascript) for recieving payments like :
-```
+* Check that the module was created and once created set the node address and Startdust address(from javascript) for recieving payments like :
+
+```js
 checkModuleLoad=setInterval(function() {
                   if (qtLoader.module())
                   {
@@ -51,11 +56,13 @@ The only dependencies of this code are [Qt](https://www.qt.io/) and [Libsodium](
 It is necessary to have installed [Qt for WebAssembly](https://doc.qt.io/qt-6/wasm.html) and [libsodium.js](https://github.com/jedisct1/libsodium.js). 
 
 Clone the repo
+
 ```
 git clone git@github.com:EddyTheCo/BuyMeACoffe.git 
 ```
 
 Create build directory and build from there. One needs to use the qt-cmake from wasm_32 folder.
+
 ```
 mkdir build 
 cd build
