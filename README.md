@@ -57,13 +57,13 @@ It is necessary to have installed [Qt for WebAssembly](https://doc.qt.io/qt-6/wa
 
 Clone the repo
 
-```
+```console
 git clone git@github.com:EddyTheCo/BuyMeACoffe.git 
 ```
 
 Create build directory and build from there. One needs to use the qt-cmake from wasm_32 folder.
 
-```
+```console
 mkdir build 
 cd build
 qt-cmake -DCMAKE_BUILD_TYPE=Release ../BuyMeACoffe/
@@ -74,7 +74,7 @@ If everything went well, the corresponding WASM file and JavaScript Api should b
 
 ## Running the web page locally
  
-```
+```console
 cd ../BuyMeACoffe/wasm
 emrun  buymeacoffe.html
 ```
