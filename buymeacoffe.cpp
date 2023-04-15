@@ -7,9 +7,8 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-
     QQmlApplicationEngine engine;
-    engine.addImageProvider(QLatin1String("qrcodeblack"), new QRImageProvider("black",1));
+    engine.addImageProvider(QLatin1String("qrcodeblack"), new QRImageProvider("#10141c",1));
 
     engine.addImportPath("qrc:/esterVtech.com/imports");
     engine.addImportPath("_deps/mydesigns-build/");

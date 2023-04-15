@@ -1,13 +1,13 @@
 # [BuyMeACoffe](https://eddytheco.github.io/BuyMeACoffe/wasm/index.html)
 
-This repo produce a wasm file able to monitor certain IOTA-address(Shimmer).
-The application will show the total amount of funds on the address and also the metadata of the new transfer funds to that address.
+This repo produce a wasm file able to monitor certain IOTA-address(Startdust).
+The application will show the total amount of funds (from basic outputs) on the address and also the metadata of the new transfer funds to that address.
 This can be used as a BuyMeACoffe app that one can embed on your website.
 Notice that the application do not collect the new outputs created on your address.
 Due to that, one needs to take care of collecting the dust on your address.
 
 ### How to embed it into your webpage
-
+1. Include [qtloader.js](https://eddytheco.github.io/BuyMeACoffe/wasm/qtloader.js)
 1. Include [initQTwasm](https://eddytheco.github.io/BuyMeACoffe/wasm/js/initQTwasm.js) in your JavaScripts.
 
 2. Select an element of your webpage where you want the BuyMeACoffe to show and set the 'id'.
@@ -23,12 +23,10 @@ qtLoader = initQTwasm('.', 'buymeacoffe', '#qtrootDiv', 'img/qtlogo.svg');
 
 ```
 where the first argument is the address where the buymeacoffe.wasm and buymeacoffe.js are.
-The second argument is the name of the application (buymeacoffe), #qtrootDiv represent the element id where you want to show it.
+The second argument is the name of the application, #qtrootDiv represent the element id where you want to show it.
 And the last argument is the logo to show when the application is loading. 
 
-
-
-4. Check that the module was created and once created set the node address and shimmer address(from javascript) for recieving payments like :
+4. Check that the module was created and once created set the node address and Startdust address(from javascript) for recieving payments like :
 ```
 checkModuleLoad=setInterval(function() {
                   if (qtLoader.module())
@@ -44,15 +42,13 @@ checkModuleLoad=setInterval(function() {
                   if(counter>60)clearInterval(checkModuleLoad);
           }, 1000);
 ``` 
-**To avoid security issues you should compile your own buymeacoffe.wasm.
-You can load mine, but you are the only responsible if someone change the address you show on the qrcode.**
 
 
 ## How to compile the .wasm
 
-**This repo is out of date for some dependencies** 
-The only dependencies of this code is [Qt](https://www.qt.io/) for wasm.
-It is necessary to have installed [Qt for WebAssembly](https://doc.qt.io/qt-6/wasm.html). 
+The only dependencies of this code are [Qt](https://www.qt.io/) and [Libsodium](https://doc.libsodium.org/).
+
+It is necessary to have installed [Qt for WebAssembly](https://doc.qt.io/qt-6/wasm.html) and [libsodium.js](https://github.com/jedisct1/libsodium.js). 
 
 Clone the repo
 ```
