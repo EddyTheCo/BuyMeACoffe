@@ -19,13 +19,6 @@ function init() {
 
 }
 
-function LoadFile(readme) {
-	axios.get(readme).then(response => {
-		document.querySelector('#md').mdContent = response.data;
-	}).catch(error => {
-		console.log(error);
-	});
-}
 
 function resizeSplitX(event) {
 	const canvas = document.querySelector('#screen');

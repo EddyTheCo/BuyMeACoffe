@@ -8,10 +8,11 @@ Due to that, one needs to take care of collecting the dust on your address.
 
 ### How to embed it into your webpage
 
-* Include [qtloader.js](https://eddytheco.github.io/BuyMeACoffe/wasm/qtloader.js)
-* Include [initQTwasm](https://eddytheco.github.io/BuyMeACoffe/wasm/js/initQTwasm.js) in your JavaScripts.
+1. Include [qtloader.js](https://eddytheco.github.io/BuyMeACoffe/wasm/qtloader.js)
 
-* Select an element of your webpage where you want the BuyMeACoffe to show and set the 'id'.
+2. Include [initQTwasm](https://eddytheco.github.io/BuyMeACoffe/wasm/js/initQTwasm.js) in your JavaScripts.
+
+3. Select an element of your webpage where you want the BuyMeACoffe to show and set the 'id'.
 like:
 
 ```html
@@ -19,7 +20,7 @@ like:
  </div>
 ```
 
-* Load  the wasm and emscriptem module with:
+4. Load  the wasm and emscriptem module with:
 
 ```js
 qtLoader = initQTwasm('.', 'buymeacoffe', '#qtrootDiv', 'img/qtlogo.svg');
@@ -30,7 +31,7 @@ where the first argument is the address where the buymeacoffe.wasm and buymeacof
 The second argument is the name of the application, #qtrootDiv represent the element id where you want to show it.
 And the last argument is the logo to show when the application is loading. 
 
-* Check that the module was created and once created set the node address and Startdust address(from javascript) for recieving payments like :
+5. Check that the module was created and once created set the node address and Startdust address(from javascript) for recieving payments like :
 
 ```js
 checkModuleLoad=setInterval(function() {
