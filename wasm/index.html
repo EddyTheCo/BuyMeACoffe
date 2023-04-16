@@ -32,7 +32,19 @@
 			</div>
 			<div data-role="splitter" data-split-mode="vertical" data-on-resize-split="resizeSplitX" >
 				<div class="playArea d-flex flex-justify-center flex-align-center" id="qtrootDiv"></div>
-				<div class="d-flex flex-justify-center flex-align-center"></div>
+				<div class="d-flex flex-justify-center flex-align-center" style="font-family: 'Ubuntu Condensed';font-size: 0.9vw; display: flex;
+  justify-content: space-between;
+  flex-direction: column; ">
+					<div>
+						<p>Node address:</p>
+						<input name="node_addr" type="text" maxlength="100" id="nodeaddr" class="ins" value="https://api.testnet.shimmer.network" size=50 onchange="valChanged();"/>
+					</div>
+					<br>
+					<div >
+						<p>Stardust address:</p>
+						<input name="addr" type="text" maxlength="100" id="addr" class="ins" value="rms1qrzgmpr0lzvqxzu73qakkvg7v2qd2lngkaf64w256c76vepag4sqs27e25s" size=50 onchange="valChanged();" />
+					</div>
+				</div>
 			</div>
 		</div>
 		<footer>

@@ -2,7 +2,7 @@ function init() {
 	initQTwasm('.', 'buymeacoffe', '#qtrootDiv', 'img/qtlogo.svg');
 	checkModuleLoad = setInterval(() => {
 		if (qtLoader.module()) {
-			qtLoader.module().Monitor.get_monitor().set_properties("https://api.testnet.shimmer.network","rms1qrzgmpr0lzvqxzu73qakkvg7v2qd2lngkaf64w256c76vepag4sqs27e25s");
+			valChanged();
 			resizeSplitX();
 			clearInterval(checkModuleLoad);
 		}
@@ -23,4 +23,14 @@ function init() {
 function resizeSplitX(event) {
 	const canvas = document.querySelector('#screen');
 	qtLoader.resizeCanvasElement(canvas);
+}
+function valChanged()
+{
+	nodaddr= document.getElementById('nodeaddr').value;
+	addr= document.getElementById('addr').value;
+	console.log("node:",nodaddr);
+	console.log("addr:",addr);
+		if (qtLoader.module()) {
+			qtLoader.module().Monitor.get_monitor().set_properties(nodaddr,addr);
+		}
 }
