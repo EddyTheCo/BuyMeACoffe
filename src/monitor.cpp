@@ -15,7 +15,12 @@ Monitor::Monitor(QObject *parent):QObject(parent),receiver(nullptr),nodeconnecti
 {
     monitors.push_back(this);
     connect(this,&Monitor::addr_changed,this,&Monitor::restart);
-    connect(nodeconnection_,&Node_Conection::stateChanged,this,[=](){emit addr_changed();});
+    connect(nodeconnection_,&Node_Conection::stateChanged,this,[=](){
+		    if(nodeconnection_->state()==Node_Conection::Connected)
+		    {
+		    	emit this->addr_changed();
+		    }
+		    });
 
 }
 
@@ -26,6 +31,8 @@ void Monitor::restart(void)
     {
 	saldo_=0;    
 	emit saldo_changed();
+	hash.clear();
+
         if(receiver)receiver->deleteLater();
         receiver=new QObject(this);
 
