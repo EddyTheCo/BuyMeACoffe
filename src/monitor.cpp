@@ -17,8 +17,6 @@ Monitor::Monitor(QObject *parent):QObject(parent),receiver(nullptr),nodeconnecti
     connect(this,&Monitor::addr_changed,this,&Monitor::restart);
     connect(nodeconnection_,&Node_Conection::stateChanged,this,[=](){emit addr_changed();});
 
-    set_node("https://api.testnet.shimmer.network");
-    set_address("rms1qrzgmpr0lzvqxzu73qakkvg7v2qd2lngkaf64w256c76vepag4sqs27e25s");
 }
 
 void Monitor::restart(void)
@@ -26,6 +24,8 @@ void Monitor::restart(void)
 
     if(nodeconnection_->state()==Node_Conection::Connected&&!addr_.isNull())
     {
+	saldo_=0;    
+	emit saldo_changed();
         if(receiver)receiver->deleteLater();
         receiver=new QObject(this);
 
