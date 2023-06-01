@@ -32,7 +32,7 @@ ApplicationWindow {
             Layout.alignment: (grid.columns===2)?(Qt.AlignTop|Qt.AlignLeft):(Qt.AlignTop|Qt.AlignHCenter)
             Layout.fillHeight: true
             Layout.fillWidth: true
-            addr_:win.addr
+            address:win.addr
             color:"white"
             radius: 10
 

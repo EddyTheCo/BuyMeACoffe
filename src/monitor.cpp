@@ -60,7 +60,7 @@ void Monitor::restart(void)
                 info->deleteLater();
 
             });
-            Node_Conection::rest_client->get_outputs<qblocks::Output::Basic_typ>
+            Node_Conection::rest_client->get_outputs<Output::Basic_typ>
                     (node_outputs_,"address="+qencoding::qbech32::Iota::encode(info->bech32Hrp,addr_));
 
 
@@ -123,15 +123,15 @@ QJsonObject Monitor::saldo()const
 
 void Monitor::checkOutput(const Node_output &v)
 {
-    const auto eddaddr=qblocks::Address::from_(addr_);
+    const auto eddaddr=Address::from_array(addr_);
     const auto outid=v.metadata().outputid_.toHexString();
 
     auto addr_bundle= new address_bundle(eddaddr);
     QString metadata;
-    const auto  metfeau=v.output()->get_feature_(qblocks::Feature::Metadata_typ);
+    const auto  metfeau=v.output()->get_feature_(Feature::Metadata_typ);
     if(metfeau)
     {
-        auto metadata_feature=std::dynamic_pointer_cast<qblocks::Metadata_Feature>(metfeau);
+        auto metadata_feature=std::static_pointer_cast<const Metadata_Feature>(metfeau);
         metadata=QString(metadata_feature->data());
     }
     std::vector<Node_output> outs{v};
