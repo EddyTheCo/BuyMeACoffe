@@ -7,9 +7,9 @@ ApplicationWindow {
     visible: true
     color:"#10141c"
 
+
     id:win
     property string addr:Message_model.monitor.addr
-    property var saldo:Message_model.monitor.saldo
     FontLoader {
         id: webFont
         source: "qrc:/esterVtech.com/imports/BuyMeACoffe/qml/fonts/DeliciousHandrawn-Regular.ttf"
@@ -35,44 +35,61 @@ ApplicationWindow {
             address:win.addr
             color:"white"
             radius: 10
+            visible: Message_model.monitor.state
 
         }
 
         ColumnLayout
         {
             id:right_
-            Layout.minimumWidth: 50
-            Layout.minimumHeight: 50
+            Layout.minimumWidth: 100
+            Layout.minimumHeight: 100
             Layout.fillHeight: true
             Layout.fillWidth: true
             Layout.alignment: (grid.columns===2)?(Qt.AlignTop|Qt.AlignLeft):(Qt.AlignTop|Qt.AlignHCenter)
             spacing:0
-            Text
+
+            RowLayout
             {
-                id:tamo_
-                Layout.minimumWidth: 75
-                Layout.minimumHeight: 35
-                Layout.maximumHeight: 50
-                Layout.fillHeight: true
                 Layout.fillWidth: true
-                Layout.alignment: Qt.AlignTop
-                text:"<b>Total:   </b> <font color=\"#1998ff\">"+ win.saldo.amount  +" "+win.saldo.unit +"</font>"
-                fontSizeMode:Text.Fit
-                wrapMode:Text.WordWrap
-                color:"white"
-                font: webFont.font
-                horizontalAlignment: TextEdit.AlignHCenter
-                Rectangle
+                Layout.fillHeight:  true
+                Layout.maximumHeight: 40
+                Layout.alignment:Qt.AlignCenter
+                Text
                 {
-                    id:line
-                    anchors.bottom: parent.bottom
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    width:parent.width*0.9
-                    height:2
-                    color:"#1998ff"
+                    id:tamo_
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignCenter
+                    text:(Message_model.monitor.state)?"<b>Total:   </b>":"Waiting for the node"
+                    horizontalAlignment:(Message_model.monitor.state)?Text.AlignRight:Text.AlignHCenter
+                    color: CustomStyle.frontColor1
+                    font: webFont.font
+                    fontSizeMode:Text.Fit
+                }
+                AmountText
+                {
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignCenter
+                    jsob:Message_model.monitor.funds
+                    horizontalAlignment:Text.AlignLeft
+                    fontSizeMode:Text.Fit
+                    font: webFont.font
+                    visible:(Message_model.monitor.state)
                 }
 
             }
+
+            Rectangle
+            {
+                id:line
+                Layout.fillWidth: true
+                Layout.preferredHeight: 2
+                Layout.maximumWidth: parent.width*0.9
+                Layout.alignment: Qt.AlignCenter
+                color: CustomStyle.frontColor2
+            }
+
+
             Message_list
             {
                 id:list_
