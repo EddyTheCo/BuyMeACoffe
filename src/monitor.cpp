@@ -10,34 +10,36 @@ using namespace qiota::qblocks;
 using namespace qiota;
 using namespace qencoding::qbech32::Iota;
 
-std::vector<Monitor*> Monitor::monitors=std::vector<Monitor*>();
-Monitor::Monitor(QObject *parent):QObject(parent),receiver(nullptr),nodeconnection_(new Node_Conection(this)),saldo_(0)
+Monitor* Monitor::the_monitor= nullptr;
+Monitor::Monitor(QObject *parent):QObject(parent),receiver(new QObject(this)),
+    state_(Disconnected),nodeconnection_(new Node_Conection(this)),
+    funds_(0)
 {
-    monitors.push_back(this);
+    the_monitor=this;
+
     connect(this,&Monitor::addr_changed,this,&Monitor::restart);
     connect(nodeconnection_,&Node_Conection::stateChanged,this,[=](){
-		    if(nodeconnection_->state()==Node_Conection::Connected)
-		    {
-		    	emit this->addr_changed();
-		    }
-		    });
+        emit this->addr_changed();
+    });
 
 }
 
 void Monitor::restart(void)
 {
-
+    setState(Disconnected);
     if(nodeconnection_->state()==Node_Conection::Connected&&!addr_.isNull())
     {
-	saldo_=0;    
-	emit saldo_changed();
-	hash.clear();
+        setState(Connected);
+        funds_=0;
+        hash.clear();
 
         if(receiver)receiver->deleteLater();
         receiver=new QObject(this);
 
-        auto info=Node_Conection::rest_client->get_api_core_v2_info();
+        auto info=nodeconnection_->rest_client->get_api_core_v2_info();
         connect(info,&Node_info::finished,receiver,[=]( ){
+            funds_json=info->amount_json(funds_);
+            emit fundsChanged();
 
             auto node_outputs_=new Node_outputs();
             connect(node_outputs_,&Node_outputs::finished,receiver,[=]( ){
@@ -48,22 +50,22 @@ void Monitor::restart(void)
                 }
                 node_outputs_->deleteLater();
 
-
-                auto resp=Node_Conection::mqtt_client->
+                auto resp=nodeconnection_->mqtt_client->
                         get_outputs_unlock_condition_address("address/"+qencoding::qbech32::Iota::encode(info->bech32Hrp,addr_));
 
                 auto lambda= [=](QJsonValue data){
+
                     const auto node_output=Node_output(data);
                     checkOutput(node_output);
                 };
+
                 connect(resp,&ResponseMqtt::returned,receiver,lambda);
+
                 info->deleteLater();
 
             });
-            Node_Conection::rest_client->get_outputs<Output::Basic_typ>
+            nodeconnection_->rest_client->get_outputs<Output::Basic_typ>
                     (node_outputs_,"address="+qencoding::qbech32::Iota::encode(info->bech32Hrp,addr_));
-
-
 
         });
         emit restarted();
@@ -86,47 +88,16 @@ void Monitor::set_address(const std::string addr)
 void Monitor::set_node(const std::string node_addr)
 {
     const auto qnode_addr=QUrl(QString::fromStdString(node_addr));
-    if(qnode_addr.isValid())
-    {
-        if(qnode_addr!=Node_Conection::rest_client->get_node_address())
-        {
-            Node_Conection::rest_client->set_node_address(qnode_addr);
-        }
-    }
+
+    nodeconnection_->set_naddr(qnode_addr);
 
 }
-QJsonObject amountString(const quint64& amount_)
-{
-    const auto baseToken=Node_Conection::rest_client->info()["baseToken"].toObject();
-    const auto unit=baseToken["unit"].toString();
-    const auto subunit=baseToken["subunit"].toString();
-    const auto decimals=baseToken["decimals"].toInt();
-
-    QJsonObject var;
-    if(amount_>std::pow(10,decimals*0.8))
-    {
-        var.insert("unit",unit);
-        var.insert("amount",QString::number(amount_*1.0/std::pow(10,decimals),'g', 5));
-        return var;
-    }
-    else
-    {
-        var.insert("unit",subunit);
-        var.insert("amount",QString::number(amount_,'g', 5));
-        return var;
-    }
-}
-QJsonObject Monitor::saldo()const
-{
-    return amountString(saldo_);
-}
-
 void Monitor::checkOutput(const Node_output &v)
 {
     const auto eddaddr=Address::from_array(addr_);
     const auto outid=v.metadata().outputid_.toHexString();
 
-    auto addr_bundle= new address_bundle(eddaddr);
+    auto addr_bundle= address_bundle(eddaddr);
     QString metadata;
     const auto  metfeau=v.output()->get_feature_(Feature::Metadata_typ);
     if(metfeau)
@@ -135,31 +106,31 @@ void Monitor::checkOutput(const Node_output &v)
         metadata=QString(metadata_feature->data());
     }
     std::vector<Node_output> outs{v};
-    addr_bundle->consume_outputs(outs,0);
-
-    if(addr_bundle->amount&&!hash.contains(outid))
+    addr_bundle.consume_outputs(outs,0);
+    if(addr_bundle.amount&&!hash.contains(outid))
     {
-
         folloup(outid);
-        hash[outid]=addr_bundle->amount;
-        saldo_+=addr_bundle->amount;
-        emit saldo_changed();
-        if(!metadata.isNull())
-        {
-            QJsonObject var;
-            var.insert("message",metadata);
-            var.insert("baseToken",amountString(addr_bundle->amount));
-            emit new_output(outid,var);
-        }
+        hash[outid]=addr_bundle.amount;
+        funds_+=addr_bundle.amount;
+        auto info=nodeconnection_->rest_client->get_api_core_v2_info();
+        QObject::connect(info,&Node_info::finished,receiver,[=]( ){
+            funds_json=info->amount_json(this->funds_);
+            emit fundsChanged();
 
-
+            if(!metadata.isNull())
+            {
+                QJsonObject var;
+                var.insert("message",metadata);
+                var.insert("baseToken",info->amount_json(addr_bundle.amount));
+                emit new_output(outid,var);
+            }
+            info->deleteLater();
+        });
     }
-
-
 }
 void Monitor::folloup(QString outid)
 {
-    auto resp=Node_Conection::mqtt_client->get_outputs_outputId(outid);
+    auto resp=nodeconnection_->mqtt_client->get_outputs_outputId(outid);
     QObject::connect(resp,&ResponseMqtt::returned,receiver,[=](QJsonValue data)
     {
 
@@ -168,8 +139,13 @@ void Monitor::folloup(QString outid)
 
         if(node_outputs_.metadata().is_spent_)
         {
-            saldo_-=hash[outid];
-            emit saldo_changed();
+            funds_-=hash[outid];
+            auto info=nodeconnection_->rest_client->get_api_core_v2_info();
+            QObject::connect(info,&Node_info::finished,receiver,[=]( ){
+                funds_json=info->amount_json(this->funds_);
+                emit fundsChanged();
+                info->deleteLater();
+            });
             hash.remove(outid);
             emit outputChanged(outid);
             resp->deleteLater();

@@ -1,4 +1,4 @@
-# [BuyMeACoffe](https://eddytheco.github.io/BuyMeACoffe/wasm/index.html)
+# [BuyMeACoffe](https://eddytheco.github.io/BuyMeACoffe/index.html)
 
 This repo produce a wasm file able to monitor certain IOTA-address(Startdust).
 The application will show the total amount of funds (from basic outputs) on the address and also the metadata of the new transfer funds to that address.
@@ -8,9 +8,9 @@ Due to that, one needs to take care of collecting the dust on your address.
 
 ### How to embed it into your webpage
 
-1. Include [qtloader.js](https://eddytheco.github.io/BuyMeACoffe/wasm/qtloader.js)
+1. Include [qtloader.js](https://eddytheco.github.io/BuyMeACoffe/qtloader.js)
 
-2. Include [initQTwasm](https://eddytheco.github.io/BuyMeACoffe/wasm/js/initQTwasm.js) in your JavaScripts.
+2. Include [initQTwasm](https://eddytheco.github.io/BuyMeACoffe/js/initQTwasm.js) in your JavaScripts.
 
 3. Select an element of your webpage where you want the BuyMeACoffe to show and set the 'id'.
 like:
@@ -52,9 +52,9 @@ checkModuleLoad=setInterval(function() {
 
 ## How to compile the .wasm
 
-The only dependencies of this code are [Qt](https://www.qt.io/) and [Libsodium](https://doc.libsodium.org/).
+The only dependencies of this code are [Qt](https://www.qt.io/).
 
-It is necessary to have installed [Qt for WebAssembly](https://doc.qt.io/qt-6/wasm.html) and [libsodium.js](https://github.com/jedisct1/libsodium.js). 
+It is necessary to have installed [Qt for WebAssembly](https://doc.qt.io/qt-6/wasm.html). 
 
 Clone the repo
 
@@ -62,12 +62,12 @@ Clone the repo
 git clone git@github.com:EddyTheCo/BuyMeACoffe.git 
 ```
 
-Create build directory and build from there. One needs to use the qt-cmake from wasm_32 folder.
+Create build directory and build from there. One needs to use the qt-cmake from wasm_singlethread folder.
 
 ```console
 mkdir build 
 cd build
-qt-cmake -DCMAKE_BUILD_TYPE=Release ../BuyMeACoffe/
+qt-cmake  ../BuyMeACoffe/
 cmake --build . 
 ```
 
