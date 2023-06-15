@@ -1,16 +1,41 @@
 cmake_minimum_required(VERSION 3.16)
 
 include(local_conf.cmake OPTIONAL)
+include(FetchContent)
+FetchContent_Declare(
+	ccommon
+	GIT_REPOSITORY https://github.com/EddyTheCo/Common.git
+	GIT_TAG main
+	)
+FetchContent_MakeAvailable(ccommon)
+version_from_git(
+	LOG       OFF
+	TIMESTAMP "%Y%m%d%H%M%S"
+	)
 
-project(BuyMeACoffe VERSION 0.1 LANGUAGES CXX)
+project(BuyMeACoffe VERSION ${VERSION} LANGUAGES CXX)
 
-set(CMAKE_AUTOMOC ON)
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+include(GNUInstallDirs)
+
+set(default_build_type "Release")
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+	message(STATUS "Setting build type to '${default_build_type}' as none was specified.")
+	set(CMAKE_BUILD_TYPE "${default_build_type}" CACHE
+		STRING "Choose the type of build." FORCE)
+	# Set the possible values of build type for cmake-gui
+	set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
+		"Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+endif()
 
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick)
 
 
+qt_standard_project_setup()
 
 qt_add_executable(buymeacoffe buymeacoffe.cpp)
 
@@ -45,38 +70,38 @@ target_link_libraries(buymeacoffe PRIVATE Qt::Core Qt::Gui Qt::Qml Qt::Quick)
 
 target_include_directories(buymeacoffe PUBLIC include)
 
-include(FetchContent)
-#FetchContent_Declare(
-#	qrCode
-#	GIT_REPOSITORY git@github.com:EddyTheCo/qrCode.git
-#	GIT_TAG v0.0.1
-#	FIND_PACKAGE_ARGS 0 CONFIG
-#	)
-#FetchContent_MakeAvailable(qrCode)
-find_package(qrCode 0 REQUIRED  CONFIG)
+FetchContent_Declare(
+	qrCode
+	GIT_REPOSITORY https://github.com/EddyTheCo/qrCode.git
+	GIT_TAG v0.0.1
+	FIND_PACKAGE_ARGS 0 CONFIG
+	)
+FetchContent_MakeAvailable(qrCode)
+
 FetchContent_Declare(
 	MyDesigns
-	GIT_REPOSITORY git@github.com:EddyTheCo/MyDesigns.git
-	GIT_TAG main
+	GIT_REPOSITORY https://github.com/EddyTheCo/MyDesigns.git
+	GIT_TAG v0.1.1 
+	FIND_PACKAGE_ARGS 0 CONFIG
 	)
 FetchContent_MakeAvailable(MyDesigns)
 FetchContent_Declare(
 	account
-	GIT_REPOSITORY git@github.com:EddyTheCo/account.git
-	GIT_TAG main
+	GIT_REPOSITORY https://github.com/EddyTheCo/account.git
+	GIT_TAG v0.1.1
+	FIND_PACKAGE_ARGS 0 CONFIG
 	)
 FetchContent_MakeAvailable(account)
 FetchContent_Declare(
 	nodeConection
-	GIT_REPOSITORY git@github.com:EddyTheCo/ConectionSettings.git
-	GIT_TAG main
+	GIT_REPOSITORY https://github.com/EddyTheCo/ConectionSettings.git
+	GIT_TAG v0.1.3
+	FIND_PACKAGE_ARGS 0 CONFIG
 	)
 FetchContent_MakeAvailable(nodeConection)
 
 target_link_libraries(buymeacoffe PRIVATE MyDesigns account nodeConection qrCode::QtQrGen)
 
-target_compile_definitions(buymeacoffe
-	PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 
 if(EMSCRIPTEN)
 	target_compile_definitions(buymeacoffe PRIVATE USE_EMSCRIPTEN)
