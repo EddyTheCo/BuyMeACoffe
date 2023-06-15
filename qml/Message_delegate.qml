@@ -27,25 +27,26 @@ RowLayout
         wrapMode:Text.Wrap
         fontSizeMode:Text.Fit
         font: webFont.font
-        color:"white"
+        color: CustomStyle.frontColor1
         horizontalAlignment: TextEdit.AlignLeft
         onLinkActivated: (link) => Qt.openUrlExternally(link)
         textFormat:Text.RichText
 
     }
-
-    Text
+    AmountText
     {
         id:amo_
         Layout.maximumWidth: 100
+        Layout.minimumWidth: 50
         Layout.fillHeight: true
         Layout.fillWidth: true
         Layout.alignment: Qt.AlignCenter
-        text:root_box.jsob.baseToken.amount+" "+root_box.jsob.baseToken.unit
         fontSizeMode:Text.Fit
         font: webFont.font
-        color:"#1998ff"
+        jsob:(Node_Conection.state)?root_box.jsob.baseToken:{}
         horizontalAlignment: TextEdit.AlignRight
         wrapMode:Text.WordWrap
+
     }
+
 }
