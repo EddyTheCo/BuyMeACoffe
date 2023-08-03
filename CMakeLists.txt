@@ -32,6 +32,36 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
 		"Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
 
+FetchContent_Declare(
+	qrCode
+	GIT_REPOSITORY https://github.com/EddyTheCo/qrCode.git
+	GIT_TAG v0.0.1
+	FIND_PACKAGE_ARGS 0 CONFIG
+	)
+FetchContent_MakeAvailable(qrCode)
+
+FetchContent_Declare(
+	MyDesigns
+	GIT_REPOSITORY https://github.com/EddyTheCo/MyDesigns.git
+	GIT_TAG v0.1.1 
+	FIND_PACKAGE_ARGS 0 CONFIG
+	)
+FetchContent_MakeAvailable(MyDesigns)
+FetchContent_Declare(
+	account
+	GIT_REPOSITORY https://github.com/EddyTheCo/account.git
+	GIT_TAG v0.1.1
+	FIND_PACKAGE_ARGS 0 CONFIG
+	)
+FetchContent_MakeAvailable(account)
+FetchContent_Declare(
+	nodeConection
+	GIT_REPOSITORY https://github.com/EddyTheCo/ConectionSettings.git
+	GIT_TAG v0.1.4
+	FIND_PACKAGE_ARGS 0 CONFIG
+	)
+FetchContent_MakeAvailable(nodeConection)
+
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick)
 
 
@@ -70,35 +100,7 @@ target_link_libraries(buymeacoffe PRIVATE Qt::Core Qt::Gui Qt::Qml Qt::Quick)
 
 target_include_directories(buymeacoffe PUBLIC include)
 
-FetchContent_Declare(
-	qrCode
-	GIT_REPOSITORY https://github.com/EddyTheCo/qrCode.git
-	GIT_TAG v0.0.1
-	FIND_PACKAGE_ARGS 0 CONFIG
-	)
-FetchContent_MakeAvailable(qrCode)
 
-FetchContent_Declare(
-	MyDesigns
-	GIT_REPOSITORY https://github.com/EddyTheCo/MyDesigns.git
-	GIT_TAG v0.1.1 
-	FIND_PACKAGE_ARGS 0 CONFIG
-	)
-FetchContent_MakeAvailable(MyDesigns)
-FetchContent_Declare(
-	account
-	GIT_REPOSITORY https://github.com/EddyTheCo/account.git
-	GIT_TAG v0.1.1
-	FIND_PACKAGE_ARGS 0 CONFIG
-	)
-FetchContent_MakeAvailable(account)
-FetchContent_Declare(
-	nodeConection
-	GIT_REPOSITORY https://github.com/EddyTheCo/ConectionSettings.git
-	GIT_TAG v0.1.3
-	FIND_PACKAGE_ARGS 0 CONFIG
-	)
-FetchContent_MakeAvailable(nodeConection)
 
 target_link_libraries(buymeacoffe PRIVATE MyDesigns account nodeConection qrCode::QtQrGen)
 
